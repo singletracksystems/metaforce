@@ -26,11 +26,11 @@ EOL
   s.add_dependency 'activesupport'
   s.add_dependency 'hashie', '~> 1.2.0'
   s.add_dependency 'thor', '~> 0.18'
-  s.add_dependency 'nokogiri', '~> 1.10.4'
+  s.add_dependency 'nokogiri', '~> 1.13.4'
   s.add_dependency 'listen', '~> 0.6.0'
   s.add_dependency 'rb-fsevent', '~> 0.9.1'
 
-  s.add_development_dependency 'rake', '< 11.0'
+  s.add_development_dependency 'rake', '>= 12.3.3'
   s.add_development_dependency 'rspec', '~> 2.14'
   s.add_development_dependency 'webmock'
   s.add_development_dependency 'savon_spec', '~> 1.3.0'
