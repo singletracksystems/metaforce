@@ -26,7 +26,7 @@ EOL
   s.add_dependency 'activesupport'
   s.add_dependency 'hashie', '~> 1.2.0'
   s.add_dependency 'thor', '~> 1.0'
-  s.add_dependency 'nokogiri', '~> 1.15.6'
+  s.add_dependency 'nokogiri', '~> 1.16.5'
   s.add_dependency 'listen', '~> 0.6.0'
   s.add_dependency 'rb-fsevent', '~> 0.9.1'
 
