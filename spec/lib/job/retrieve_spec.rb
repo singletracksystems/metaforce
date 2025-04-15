@@ -23,6 +23,6 @@ describe Metaforce::Job::Retrieve do
     end
 
     subject { job.zip_file.bytes }
-    it { should eq [126, 138, 27] }
+    it { should eq [126, 138, 27, 106] }
   end
 end
