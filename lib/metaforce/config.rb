@@ -71,6 +71,9 @@ module Metaforce
     end
 
     def log=(log)
+      Savon.configure do |config|
+        config.log = log
+      end
       HTTPI.log = log
     end
 

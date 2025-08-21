@@ -18,10 +18,12 @@ module Metaforce
       #
       # Returns the result.
       def send_email(options={})
-        request(:send_email, :message =>{
-          :messages => options,
-          :attributes! => { 'ins0:messages' => { 'xsi:type' => 'ins0:SingleEmailMessage' } }
-        } )
+        request :send_email do |soap|
+          soap.body = {
+            :messages => options,
+            :attributes! => { 'ins0:messages' => { 'xsi:type' => 'ins0:SingleEmailMessage' } }
+          }
+        end
       end
 
       # Public: Retrieves layout information for the specified sobject.
@@ -35,9 +37,10 @@ module Metaforce
       #
       # Returns the layout metadata for the sobject.
       def describe_layout(sobject, record_type_id=nil)
-          body = { 'sObjectType' => sobject }
-          body.merge!('recordTypeID' => record_type_id) if record_type_id
-          request(:describe_layout, :message => body)
+        request :describe_layout do |soap|
+          soap.body = { 'sObjectType' => sobject }
+          soap.body.merge!('recordTypeID' => record_type_id) if record_type_id
+        end
       end
 
       # Public: Get active picklists for a record type.

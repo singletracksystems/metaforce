@@ -1,3 +1,3 @@
 module Metaforce
-  VERSION = '1.2.1'
+  VERSION = '1.1.9'
 end

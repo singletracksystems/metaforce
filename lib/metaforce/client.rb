@@ -19,9 +19,9 @@ module Metaforce
     end
 
     def method_missing(method, *args, &block)
-      if metadata.respond_to?(method)
+      if metadata.respond_to? method, false
         metadata.send(method, *args, &block)
-      elsif services.respond_to? method
+      elsif services.respond_to? method, false
         services.send(method, *args, &block)
       else
         super

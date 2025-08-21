@@ -12,7 +12,7 @@ describe Metaforce::Reporters::BaseReporter do
       it 'prints the problem' do
         reporter.should_receive(:say).with('  path/file:10', :red)
         reporter.should_receive(:say).with('     Foobar')
-        reporter.should_receive(:say).with no_args
+        reporter.should_receive(:say).with
         reporter.problem(problem)
       end
     end
@@ -23,7 +23,7 @@ describe Metaforce::Reporters::BaseReporter do
       it 'prints the problem' do
         reporter.should_receive(:say).with('  path/file:', :red)
         reporter.should_receive(:say).with('     Foobar')
-        reporter.should_receive(:say).with no_args
+        reporter.should_receive(:say).with
         reporter.problem(problem)
       end
     end
@@ -55,12 +55,12 @@ describe Metaforce::Reporters::BaseReporter do
     subject { reporter.problems? }
 
     context 'when there are no problems' do
-      it { should be false }
+      it { should be_false }
     end
 
     context 'when there are problems' do
       let(:results) { Hashie::Mash.new(success: true, messages: { problem: 'Problem', file_name: 'path/file', line_number: '10' }) }
-      it { should be true }
+      it { should be_true }
     end
   end
 
@@ -68,12 +68,12 @@ describe Metaforce::Reporters::BaseReporter do
     subject { reporter.issues? }
 
     context 'when there are no problems' do
-      it { should be false }
+      it { should be_false }
     end
 
     context 'when there are problems' do
       let(:results) { Hashie::Mash.new(success: true, messages: { problem: 'Problem', file_name: 'path/file', line_number: '10' }) }
-      it { should be true }
+      it { should be_true }
     end
   end
 end
