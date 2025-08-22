@@ -15,7 +15,9 @@ describe Metaforce::Job::Deploy do
       end
 
       it { should eq job }
-      its(:id) { should eq '1234' }
+      it 'returns the correct id' do
+        expect(subject.id).to eq '1234'
+      end
     end
 
     context 'when the path is a directory' do
@@ -26,7 +28,9 @@ describe Metaforce::Job::Deploy do
 
       let(:path) { File.expand_path('../../../fixtures', __FILE__) }
       it { should eq job }
-      its(:id) { should eq '1234' }
+      it 'returns the correct id' do
+        expect(subject.id).to eq '1234'
+      end
     end
   end
 
