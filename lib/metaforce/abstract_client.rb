@@ -24,7 +24,15 @@ module Metaforce
 
     # Internal: The Savon client to send SOAP requests with.
     def client
-      @client ||= Savon.client(wsdl: wsdl, endpoint: endpoint, soap_header: soap_headers, ssl_verify_mode: :none, namespace_identifier: :ins0)
+      @client ||= Savon.client(
+        wsdl: wsdl,
+        endpoint: endpoint,
+        soap_header: soap_headers,
+        ssl_verify_mode: :none,
+        namespace_identifier: :ins0,
+        log: Metaforce.configuration.log,
+        logger: Metaforce.configuration.logger
+      )
     end
 
     # Internal: Performs a SOAP request. If the session is invalid, it will
@@ -53,9 +61,9 @@ module Metaforce
     # Internal Calls the authentication handler, which should set @options to a new
     # hash.
     def authenticate!
-      authentication_handler1 = authentication_handler
-      options = authentication_handler1.call(self, @options)
+      options = authentication_handler.call(self, @options)
       @options.merge!(options)
+      @client = nil
     end
 
     # A proc object that gets called when the client needs to reauthenticate.

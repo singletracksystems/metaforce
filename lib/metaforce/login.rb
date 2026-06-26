@@ -19,7 +19,13 @@ module Metaforce
 
     # Internal: Savon client.
     def client
-      @client ||= Savon.client(wsdl: Metaforce.configuration.partner_wsdl,endpoint: Metaforce.configuration.endpoint, ssl_verify_mode: :none )
+      @client ||= Savon.client(
+        wsdl: Metaforce.configuration.partner_wsdl,
+        endpoint: Metaforce.configuration.endpoint,
+        ssl_verify_mode: :none,
+        log: Metaforce.configuration.log,
+        logger: Metaforce.configuration.logger
+      )
     end
 
     # Internal: Usernamed passed in from options.

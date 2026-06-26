@@ -51,9 +51,11 @@ module Metaforce
     # calling .perform on a job will block until completion and all callbacks
     # have run. (default: true).
     attr_accessor :threading
+    attr_reader :log
 
     def initialize
       @threading = false
+      @log = false
     end
 
     def api_version
@@ -71,6 +73,7 @@ module Metaforce
     end
 
     def log=(log)
+      @log = log
       HTTPI.log = log
     end
 
