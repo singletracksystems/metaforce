@@ -6,12 +6,12 @@ describe Metaforce::Client do
 
   describe '.metadata' do
     subject { client.metadata }
-    it { should be_a Metaforce::Metadata::Client }
+    it { is_expected.to be_a(Metaforce::Metadata::Client) }
   end
 
   describe '.services' do
     subject { client.services }
-    it { should be_a Metaforce::Services::Client }
+    it { is_expected.to be_a(Metaforce::Services::Client) }
   end
 
   describe '.method_missing' do
@@ -34,6 +34,6 @@ describe Metaforce::Client do
 
   describe '.inspect' do
     subject { client.inspect }
-    it { should eq '#<Metaforce::Client @options={:session_id=>"foobar"}>' }
+    it { is_expected.to eq '#<Metaforce::Client @options={:session_id=>"foobar"}>' }
   end
 end

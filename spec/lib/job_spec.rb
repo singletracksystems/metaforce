@@ -6,7 +6,7 @@ describe Metaforce::Job do
 
   describe '.perform' do
     it 'starts a heart beat' do
-      job.should_receive(:start_heart_beat)
+      expect(job).to receive(:start_heart_beat)
       job.perform
     end
   end
@@ -19,17 +19,17 @@ describe Metaforce::Job do
         job.instance_variable_set(:@id, '1234')
       end
 
-      it { should be true }
+      it { is_expected.to be true }
     end
 
     context 'when .perform has not been called and no @id has been set' do
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 
   describe '.on_complete' do
     it 'allows the user to register an on_complete callback' do
-      client.should_receive(:status).at_least(1).times.and_return(Hashie::Mash.new(done: true, state: 'Completed'))
+      expect(client).to receive(:status).at_least(:once).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
       called = false
       block = lambda { |job| called = true }
       job.on_complete &block
@@ -40,7 +40,7 @@ describe Metaforce::Job do
 
   describe '.on_error' do
     it 'allows the user to register an on_error callback' do
-      client.should_receive(:status).at_least(1).times.and_return(Hashie::Mash.new(done: true, state: 'Error'))
+      expect(client).to receive(:status).at_least(:once).and_return(Hashie::Mash.new(done: true, state: 'Error'))
       called = false
       block = lambda { |job| called = true }
       job.on_error &block
@@ -51,11 +51,11 @@ describe Metaforce::Job do
 
   describe '.status' do
     before do
-      client.should_receive(:status)
+      expect(client).to receive(:status)
     end
 
     subject { job.status }
-    it { should be_nil }
+    it { is_expected.to be_nil }
   end
 
   describe '.done?' do
@@ -63,18 +63,18 @@ describe Metaforce::Job do
 
     context 'when done' do
       before do
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: true))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: true))
       end
 
-      it { should be true }
+      it { is_expected.to be true }
     end
 
     context 'when not done' do
       before do
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: false))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: false))
       end
 
-      it { should be false }
+      it { is_expected.to be false }
     end
   end
 
@@ -83,29 +83,29 @@ describe Metaforce::Job do
 
     context 'when done' do
       before do
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
       end
 
-      it { should eq 'Completed' }
+      it { is_expected.to eq('Completed') }
     end
 
     context 'when not done' do
       before do
-        client.should_receive(:status).once.and_return(Hashie::Mash.new(done: false))
+        expect(client).to receive(:status).once.and_return(Hashie::Mash.new(done: false))
       end
 
-      it { should be_falsey }
+      it { is_expected.to be_falsey }
     end
   end
 
   %w[Queued InProgress Completed Error].each do |state|
     describe ".#{state.underscore}?" do
       before do
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: true, state: state))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: true, state: state))
       end
 
       subject { job.send(:"#{state.underscore}?") }
-      it { should be true }
+      it { is_expected.to be true }
     end
   end
 end

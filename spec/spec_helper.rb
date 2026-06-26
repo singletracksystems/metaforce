@@ -8,7 +8,7 @@ RSpec.configure do |config|
   config.mock_with :rspec
   config.before(:each) do
     Metaforce.configuration.threading = false
-    Metaforce::Job.any_instance.stub(:sleep)
+    allow_any_instance_of(Metaforce::Job).to receive(:sleep)
   end
 end
 
@@ -19,10 +19,10 @@ RSpec::Matchers.define :set_default do |option|
 
   match do |configuration|
     @actual = configuration.send(option.to_sym)
-    @actual.should eq @value
+    values_match?(@value, @actual)
   end
 
-  failure_message_for_should do |configuration|
+  failure_message do
     "Expected #{option} to be set to #{@value.inspect}, got #{@actual.inspect}"
   end
 end

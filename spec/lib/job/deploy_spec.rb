@@ -10,23 +10,23 @@ describe Metaforce::Job::Deploy do
 
     context 'when the path is a file' do
       before do
-        client.should_receive(:_deploy).with(/^UEsDBA.*/, {}).and_return(Hashie::Mash.new(id: '1234'))
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
+        expect(client).to receive(:_deploy).with(/^UEsDBA.*/, {}).and_return(Hashie::Mash.new(id: '1234'))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
       end
 
-      it { should eq job }
-      it { subject.id.should eq '1234' }
+      it { is_expected.to eq(job) }
+      it { expect(subject.id).to eq('1234') }
     end
 
     context 'when the path is a directory' do
       before do
-        client.should_receive(:_deploy).with(/.*1stwAAAJI.*/, {}).and_return(Hashie::Mash.new(id: '1234'))
-        client.should_receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
+        expect(client).to receive(:_deploy).with(/.*1stwAAAJI.*/, {}).and_return(Hashie::Mash.new(id: '1234'))
+        expect(client).to receive(:status).and_return(Hashie::Mash.new(done: true, state: 'Completed'))
       end
 
       let(:path) { File.expand_path('../../../fixtures', __FILE__) }
-      it { should eq job }
-      it { subject.id.should eq '1234' }
+      it { is_expected.to eq(job) }
+      it { expect(subject.id).to eq('1234') }
     end
   end
 
@@ -34,21 +34,21 @@ describe Metaforce::Job::Deploy do
     let(:response) { Hashie::Mash.new(success: true) }
 
     before do
-      client.should_receive(:status).with(job.id, :deploy).and_return(response)
+      expect(client).to receive(:status).with(job.id, :deploy).and_return(response)
     end
 
     subject { job.result }
-    it { should eq response }
+    it { is_expected.to eq(response) }
   end
 
   describe '.success?' do
     let(:response) { Hashie::Mash.new(success: true) }
 
     before do
-      client.should_receive(:status).with(job.id, :deploy).and_return(response)
+      expect(client).to receive(:status).with(job.id, :deploy).and_return(response)
     end
 
     subject { job.success? }
-    it { should be true }
+    it { is_expected.to be true }
   end
 end

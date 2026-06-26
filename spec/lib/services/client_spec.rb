@@ -15,7 +15,7 @@ describe Metaforce::Services::Client do
       end
 
       subject { client.describe_layout('Account') }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
 
     context 'with a record type id' do
@@ -24,7 +24,7 @@ describe Metaforce::Services::Client do
       end
 
       subject { client.describe_layout('Account', '1234') }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
   end
 
@@ -35,6 +35,6 @@ describe Metaforce::Services::Client do
     end
 
     subject { client.send_email(:to_addresses => 'foo@bar.com', subject: 'foo', plain_text_body: 'bar') }
-    it { should be_a Hash}
+    it { is_expected.to be_a(Hash) }
   end
 end

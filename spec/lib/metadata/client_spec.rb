@@ -10,18 +10,18 @@ describe Metaforce::Metadata::Client do
 
   describe '.deploy' do
     subject { client.deploy File.expand_path('../../path/to/zip') }
-    it { should be_a Metaforce::Job::Deploy }
+    it { is_expected.to be_a(Metaforce::Job::Deploy) }
   end
 
   describe '.retrieve' do
     subject { client.retrieve }
-    it { should be_a Metaforce::Job::Retrieve }
+    it { is_expected.to be_a(Metaforce::Job::Retrieve) }
   end
 
   describe '.retrieve_unpackaged' do
     let(:manifest) { Metaforce::Manifest.new(:custom_object => ['Account']) }
     subject { client.retrieve_unpackaged(manifest) }
-    it { should be_a Metaforce::Job::Retrieve }
+    it { is_expected.to be_a(Metaforce::Job::Retrieve) }
   end
 
   let(:message) { { :queries => [{ :type => 'ApexClass' }] } }
@@ -39,12 +39,12 @@ describe Metaforce::Metadata::Client do
       let(:message) { { :queries => [{ :type => 'ApexClass' }] }}
 
       subject { client.list_metadata(:apex_class) }
-      it { should be_an Array }
+      it { is_expected.to be_an(Array) }
     end
 
     context 'with a single string' do
       subject { client.list_metadata('ApexClass') }
-      it { should be_an Array }
+      it { is_expected.to be_an(Array) }
     end
   end
 
@@ -55,14 +55,14 @@ describe Metaforce::Metadata::Client do
 
     let(:message) { {}  }
       subject { client.describe }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
 
     context 'with a version' do
     let(:message) { { :api_version => '18.0' }  }
 
       subject { client.describe('18.0') }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
   end
 
@@ -72,7 +72,7 @@ describe Metaforce::Metadata::Client do
     let(:message) { { :ids => ['1234'] }  }
     context 'with a single id' do
       subject { client.status '1234' }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
   end
 
@@ -82,7 +82,7 @@ describe Metaforce::Metadata::Client do
     let(:message) { { :zip_file => 'foobar', :deploy_options => {} }  }
 
     subject { client._deploy('foobar') }
-    it { should be_a Hash }
+    it { is_expected.to be_a(Hash) }
   end
 
 
@@ -93,7 +93,7 @@ describe Metaforce::Metadata::Client do
     let(:message) { { :retrieve_request => options } }
 
     subject { client._retrieve(options) }
-    it { should be_a Hash }
+    it { is_expected.to be_a(Hash) }
   end
 
 
@@ -104,7 +104,7 @@ describe Metaforce::Metadata::Client do
     let(:message) { { :metadata => [{:full_name => 'component', :label => 'test', :content => "Zm9vYmFy\n"}], :attributes! => {'ins0:metadata' => {'xsi:type' => 'ins0:ApexComponent'}} } }
 
     subject { client._create(:apex_component, :full_name => 'component', :label => 'test', :content => 'foobar') }
-    it { should be_a Hash }
+    it { is_expected.to be_a(Hash) }
   end
 
   describe '._delete' do
@@ -115,7 +115,7 @@ describe Metaforce::Metadata::Client do
     context 'with a single name' do
 
       subject { client._delete(:apex_component, 'component') }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
 
     context 'with multiple' do
@@ -124,7 +124,7 @@ describe Metaforce::Metadata::Client do
       let(:message) { { :metadata => [{:full_name => 'component1'}, {:full_name => 'component2'}], :attributes! => {'ins0:metadata' => {'xsi:type' => 'ins0:ApexComponent'}}} }
 
       subject { client._delete(:apex_component, 'component1', 'component2') }
-      it { should be_a Hash }
+      it { is_expected.to be_a(Hash) }
     end
   end
 
@@ -134,10 +134,9 @@ describe Metaforce::Metadata::Client do
     let(:message) { { :metadata => {:current_name => 'old_component', :metadata => [{:full_name => 'component', :label => 'test', :content => "Zm9vYmFy\n"}], :attributes! => {:metadata => {'xsi:type' => 'ins0:ApexComponent'}}}} }
 
     subject { client._update(:apex_component, 'old_component', :full_name => 'component', :label => 'test', :content => 'foobar') }
-    it { should be_a Hash }
+    it { is_expected.to be_a(Hash) }
   end
 end
 end
-
 
 
