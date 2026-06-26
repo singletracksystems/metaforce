@@ -13,19 +13,19 @@ describe Metaforce::Manifest do
   describe '.to_xml' do
     let(:package) { package_hash }
     subject { manifest.to_xml }
-    it { should eq package_xml }
+    it { is_expected.to eq(package_xml) }
   end
 
   describe '.to_hash' do
     let(:package) { package_xml }
     subject { manifest.to_hash }
-    it { should eq package_hash }
+    it { is_expected.to eq(package_hash) }
   end
 
   describe '.to_package' do
     subject { manifest.to_package }
     it do
-      should eq [
+      expect(subject).to eq [
         { :members => ['TestClass', 'AnotherClass'], :name => 'ApexClass' },
         { :members => ['Component'], :name => 'ApexComponent' },
         { :members => ['Assets'], :name => 'StaticResource' }

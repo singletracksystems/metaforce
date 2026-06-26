@@ -3,21 +3,20 @@ require 'metaforce/cli'
 
 describe Metaforce::CLI do
   before do
-    Metaforce::Client.any_instance.stub(:deploy).and_return(double('deploy job').as_null_object)
-    Metaforce::Client.any_instance.stub(:retrieve).and_return(double('retrieve job').as_null_object)
-    subject.stub(:config).and_return(nil)
+    allow_any_instance_of(Metaforce::Client).to receive(:deploy).and_return(double('deploy job').as_null_object)
+    allow_any_instance_of(Metaforce::Client).to receive(:retrieve).and_return(double('retrieve job').as_null_object)
+    allow(subject).to receive(:config).and_return(nil)
   end
 
   describe 'credentials' do
-    let(:output) { capture(:stdout) { subject.deploy('./path') } }
 
     context 'when supplied credentials from the command line' do
       let(:options) { indifferent_hash(:username => 'foo', :password => 'bar', :security_token => 'token', :deploy_options => {}) }
 
       it 'uses supplied credentials from command line' do
         subject.options = options
-        Metaforce.should_receive(:new).with(indifferent_hash(options).slice(:username, :password, :security_token)).and_call_original
-        output.should include('Deploying: ./path')
+        expect(Metaforce).to receive(:new).with(indifferent_hash(options).slice(:username, :password, :security_token)).and_call_original
+        expect { subject.deploy('./path') }.to output(/Deploying: \.\/path/).to_stdout
       end
     end
 
@@ -27,9 +26,9 @@ describe Metaforce::CLI do
 
       it 'uses credentials from the config file' do
         subject.options = options
-        subject.stub(:config).and_return('production' => config)
-        Metaforce.should_receive(:new).with(indifferent_hash(config)).and_call_original
-        output.should include('Deploying: ./path')
+        allow(subject).to receive(:config).and_return('production' => config)
+        expect(Metaforce).to receive(:new).with(indifferent_hash(config)).and_call_original
+        expect{ subject.deploy('./path') }.to output(/Deploying: \.\/path/).to_stdout
       end
     end
   end

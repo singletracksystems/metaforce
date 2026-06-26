@@ -21,7 +21,7 @@ EOL
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ['lib']
 
-  s.add_dependency 'savon', '~> 1.2.0'
+  s.add_dependency 'savon', '~> 2.17.2'
   s.add_dependency 'rubyzip', '~> 2.0'
   s.add_dependency 'activesupport'
   s.add_dependency 'hashie', '~> 1.2.0'
@@ -31,7 +31,6 @@ EOL
   s.add_dependency 'rb-fsevent', '~> 0.9.1'
 
   s.add_development_dependency 'rake', '>= 12.3.3'
-  s.add_development_dependency 'rspec', '~> 3.0'
+  s.add_development_dependency 'rspec', '~> 3'
   s.add_development_dependency 'webmock'
-  s.add_development_dependency 'savon_spec', '~> 1.3.0'
 end

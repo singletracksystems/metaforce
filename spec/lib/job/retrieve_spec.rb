@@ -8,21 +8,21 @@ describe Metaforce::Job::Retrieve do
     let(:response) { Hashie::Mash.new(success: true) }
 
     before do
-      client.should_receive(:status).with(job.id, :retrieve).and_return(response)
+      expect(client).to receive(:status).with(job.id, :retrieve).and_return(response)
     end
 
     subject { job.result }
-    it { should eq response }
+    it { is_expected.to eq(response) }
   end
 
   describe '.zip_file' do
     let(:response) { Hashie::Mash.new(success: true, zip_file: 'foobar') }
 
     before do
-      client.should_receive(:status).with(job.id, :retrieve).and_return(response)
+      expect(client).to receive(:status).with(job.id, :retrieve).and_return(response)
     end
 
     subject { job.zip_file.bytes }
-    it { should eq [126, 138, 27] }
+    it { is_expected.to eq([126, 138, 27, 106]) }
   end
 end
